@@ -1,14 +1,17 @@
 # checkers-game
-Implementation of the board game Checkers, made for a Bachelor Software Development Selection Test. Bit Academy project. 
+Implementation of the board game Checkers, made for a Bachelor Software Development Selection Test. Bit Academy project.  
 
 - [checkers-game](#checkers-game)
   - [Requirements for the Game](#requirements-for-the-game)
     - [Functional Requirements](#functional-requirements)
     - [Technical Requirements](#technical-requirements)
   - [Project Approach](#project-approach)
+    - [Backlogging](#backlogging)
 
 ## Requirements for the Game
 ### Functional Requirements
+
+International Draughts rules?
 
 1. Game Board & Setup
    * Board contains of 10x10 squares with alternating dark and light colors.
@@ -62,3 +65,22 @@ Sketch Tech Requirements: https://excalidraw.com/#json=0ZG0RR9ANdlzGIymjwLD0,Xhr
 **Tech Stack:**  
 Frontend: Vite + React + Node  
 Backend: Node.JS, AWS (Lambda, API Gateway)  
+
+
+Checklist:  
+- [ ] Get to know how to play checkers and how it works
+- [ ] Database Schema Design (ERD?)
+- [ ] Find a way to develop the checkers game keeping in mind it must be designed with the gameId possibility
+- [ ] Basic Board made
+- [ ] Pieces made using components (when stuck, think about tictactoe example in react docs)
+- [ ] Pieces movement
+- [ ] Switching players every play (local multiplayer)
+- [ ] Implement Capturing
+- [ ] Implement Crowning
+- [ ] Add win conditions
+- [ ] Use RESTful API's to communicate and send POST/GET requests. Eventually link to game to be able to save/load board/game state.
+- [ ] Celebrate! (Maybe add some sound effects...)
+
+
+### Backlogging
+I am attempting to make a personal backlog, incase you are interested, in working on this project. I'd like to invite you into it, by viewing docs/backlog.  
