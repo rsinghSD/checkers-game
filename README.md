@@ -68,7 +68,7 @@ Backend: Node.JS, AWS (Lambda, API Gateway)
 
 
 Checklist:  
-- [ ] Get to know how to play checkers and how it works
+- [x] Get to know how to play checkers and how it works
 - [ ] Database Schema Design (ERD?)
 - [ ] Find a way to develop the checkers game keeping in mind it must be designed with the gameId possibility
 - [ ] Basic Board made
