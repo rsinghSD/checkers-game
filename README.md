@@ -15,6 +15,7 @@ Generative AI was not used for generating any code like the requirements stated 
     - [Functional Requirements](#functional-requirements)
     - [Technical Requirements](#technical-requirements)
   - [Project Approach](#project-approach)
+  - [Database Schema Design](#database-schema-design)
     - [Backlogging](#backlogging)
 
 ## Requirements for the Game
@@ -90,6 +91,10 @@ Checklist:
 - [ ] Use RESTful API's to communicate and send POST/GET requests. Eventually link to game to be able to save/load board/game state.
 - [ ] Celebrate! (Maybe add some sound effects...)
 
+## Database Schema Design
+https://dbdiagram.io/d/Chess-Game-ERD-Diagram-6939cacde877c63074578dde
+
+![database_schema_design](./docs/images/readme/chess_game_erd_diagram.png)
 
 ### Backlogging
-I am attempting to make a personal backlog, incase you are interested, in working on this project. I'd like to invite you into it, by viewing docs/backlog.  
+The repo also includes a /docs/backlog folder with backlog markdown files. Those are personal backlogs to kind of keep track of what I did. These are includes, may you be interested and/or curious to see.
