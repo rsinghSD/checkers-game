@@ -1,7 +1,16 @@
+<h1 align="center">
+  <img src="./docs/images/readme/checkers_banner_image.png" alt="checkers-game banner" width="400" length="700" />
+</h1> 
+<!-- HTML support in Markdown is pretty epic :) -->
+
 # checkers-game
 Implementation of the board game Checkers, made for a Bachelor Software Development Selection Test. Bit Academy project.  
 
+## Foreword
+Generative AI was not used for generating any code like the requirements stated (during the intakegesprek with Bob). However, AI **is** used for image generation, explanation about code, and asking active questions.
+
 - [checkers-game](#checkers-game)
+  - [Foreword](#foreword)
   - [Requirements for the Game](#requirements-for-the-game)
     - [Functional Requirements](#functional-requirements)
     - [Technical Requirements](#technical-requirements)
