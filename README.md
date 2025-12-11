@@ -79,8 +79,8 @@ Backend: Node.JS, AWS (Lambda, API Gateway)
 
 Checklist:  
 - [x] Get to know how to play checkers and how it works
-- [ ] Database Schema Design (ERD?)
-- [ ] Find a way to develop the checkers game keeping in mind it must be designed with the gameId possibility
+- [x] Database Schema Design (ERD?)
+- [ ] Stack Preperation/database create
 - [ ] Basic Board made
 - [ ] Pieces made using components (when stuck, think about tictactoe example in react docs)
 - [ ] Pieces movement
@@ -93,6 +93,9 @@ Checklist:
 
 ## Database Schema Design
 https://dbdiagram.io/d/Chess-Game-ERD-Diagram-6939cacde877c63074578dde
+
+<iframe width="560" height="315" src='https://dbdiagram.io/e/6939cacde877c63074578dde/693b03c9e877c630747f6dc0'> </iframe>
+
 
 ![database_schema_design](./docs/images/readme/chess_game_erd_diagram.png)
 
