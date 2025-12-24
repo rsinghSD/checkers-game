@@ -80,7 +80,7 @@ Backend: Node.JS, AWS (Lambda, API Gateway)
 Checklist:  
 - [x] Get to know how to play checkers and how it works
 - [x] Database Schema Design (ERD?)
-- [ ] Stack Preperation/database create
+- [ ] Stack-preparation/database-create
 - [ ] Basic Board made
 - [ ] Pieces made using components (when stuck, think about tictactoe example in react docs)
 - [ ] Pieces movement
