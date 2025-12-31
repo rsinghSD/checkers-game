@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="./docs/images/readme/checkers_banner_image.png" alt="checkers-game banner" width="400" length="700" />
+  <img src="./checkers_banner_image.png" alt="checkers-game banner" width="400" length="700" />
 </h1> 
 <!-- HTML support in Markdown is pretty epic :) -->
 
