@@ -1,0 +1,22 @@
+.emptyBrown {
+  background-color: rgb(86, 61, 41);
+}
+
+.emptyWhite {
+  background-color: rgb(236, 199, 140);
+  
+}
+
+.pieceBlack {
+  width: 35px;
+  height: 35px;
+  background-color: black;
+  border-radius: 50%;
+}
+
+.pieceWhite {
+  width: 35px;
+  height: 35px;
+  background-color: white;
+  border-radius: 50%;
+}
