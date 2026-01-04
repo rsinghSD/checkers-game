@@ -19,14 +19,14 @@ Implementation of the board game Checkers, made for a Bachelor Software Developm
 
 International Draughts rules?
 
-1. Game Board & Setup
+1. Game Board & Setup DONE
    * Board contains of 10x10 squares with alternating dark and light colors.
     Lower-left square must be dark.
    * Each player starts with 20 pieces
    * Pieces are placed the first four rows closest to each player, leaving the two central rows empty.
    * The placer with the light-colored pieces moves first, with turns alternating thereafter
-2. Piece Movement & Capturing
-   * Ordinary Pieces
+2. Piece Movement & Capturing WORK
+   * Ordinary Pieces DONE
      * Move one square diagonally forward into an unoccupied square
    * Capturing
      * If an enemy piece is adjacent, it can-and must-be captured by jumping over it to an unoccupied square directly beyond.
@@ -45,10 +45,10 @@ International Draughts rules?
 
 ### Technical Requirements
 
-1. User Interaction:
+1. User Interaction: DONE
     * Player clicks on a piece to select it.
     * Method for moving the piece once selected is whatever you want
-2. Local Multiplayer:
+2. Local Multiplayer: DONE
     * The game supports two players on one PC. No need for extra fancy stuff.
 3. Game Persistance:
     * Saving:
@@ -59,7 +59,7 @@ International Draughts rules?
       * Unknown gameId entered, proper error (404) displayed
 4. Communication & API:
     * Communication between frontend and backend uses RESTful API
-5. Version Control:
+5. Version Control: DONE
     * Use Git for version managemtn
     * Repo must be private. Use GitHub or GitLab.
 

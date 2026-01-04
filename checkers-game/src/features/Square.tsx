@@ -11,8 +11,11 @@ export default function Square({index, onClick}: SquareProps) {
   let piece;
   // value 0 = empty brown
   // value 1 = empty white
-  // value 2 = occupied black white
-  // value 3 = occupied white white
+  // value 2 = occupied white 
+  // value 3 = occupied black 
+  // value 4 = movement box
+  // value 5 = white captureable
+  // value 6 = black captureable
   switch (index) {
     case 0:
       squareClass = "emptyBrown";
@@ -22,12 +25,22 @@ export default function Square({index, onClick}: SquareProps) {
       break;
     case 2:
       squareClass = "emptyWhite";
-      piece = <div className="pieceBlack"></div>;
-      this
+      piece = <div className="pieceWhite"></div>;
       break;
     case 3:
       squareClass = "emptyWhite";
-      piece = <div className="pieceWhite"></div>;
+      piece = <div className="pieceBlack"></div>;
+      break;
+    case 4:
+      squareClass = "possibleMove"
+      break;
+    case 5:
+      squareClass = "captureWhite"
+      piece = <div className="pieceWhite"></div>
+      break;
+    case 6:
+      squareClass = "captureWhite"
+      piece = <div className="pieceBlack"></div>
       break;
   }
 
