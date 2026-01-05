@@ -11,7 +11,9 @@ Implementation of the board game Checkers, made for a Bachelor Software Developm
     - [Functional Requirements](#functional-requirements)
     - [Technical Requirements](#technical-requirements)
   - [Project Approach](#project-approach)
+  - [Checklist](#checklist)
   - [Database Schema Design](#database-schema-design)
+  - [Known bugs](#known-bugs)
 
 ## Requirements for the Game
 ### Functional Requirements
@@ -71,6 +73,7 @@ Sketch Tech Requirements: https://excalidraw.com/#json=0ZG0RR9ANdlzGIymjwLD0,Xhr
 Frontend: Vite + React + Node  
 Backend: Node.JS, AWS (Lambda, API Gateway)  
 
+## Checklist  
 
 Checklist:  
 - [x] Get to know how to play checkers and how it works
@@ -94,3 +97,5 @@ https://dbdiagram.io/d/Chess-Game-ERD-Diagram-6939cacde877c63074578dde
 
 ![database_schema_design](./docs/images/readme/chess_game_erd_diagram.png)
 
+## Known bugs  
+See [Issues page](https://github.com/Bambaclad1/checkers-game/issues)
