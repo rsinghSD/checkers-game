@@ -78,9 +78,9 @@ Checklist:
 - [x] Database Schema Design (ERD?)
 - [x] Stack-preparation/database-create
 - [x] Basic Board made
-- [ ] Pieces made using components (when stuck, think about tictactoe example in react docs)
-- [ ] Pieces movement
-- [ ] Switching players every play (local multiplayer)
+- [x] Pieces made using components (when stuck, think about tictactoe example in react docs)
+- [x] Pieces movement
+- [x] Switching players every play (local multiplayer)
 - [ ] Implement Capturing
 - [ ] Implement Crowning
 - [ ] Add win conditions
