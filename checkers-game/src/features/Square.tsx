@@ -16,6 +16,8 @@ export default function Square({index, onClick}: SquareProps) {
   // value 4 = movement box
   // value 5 = white captureable
   // value 6 = black captureable
+  // value 7 = white crowned
+  // value 8 = black crowned
   switch (index) {
     case 0:
       squareClass = "emptyBrown";
@@ -41,6 +43,14 @@ export default function Square({index, onClick}: SquareProps) {
     case 6:
       squareClass = "captureWhite"
       piece = <div className="pieceBlack"></div>
+      break;
+    case 7:
+      squareClass = "emptyWhite"
+      piece = <div className="kingWhite"></div>
+      break;
+    case 8:
+      squareClass = "emptyWhite"
+      piece = <div className="kingBlack"></div>
       break;
   }
 

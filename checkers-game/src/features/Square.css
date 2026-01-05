@@ -7,6 +7,31 @@
 
 }
 
+.kingWhite {
+  width: 45px;
+  height: 45px;
+  background-color: white;
+  border-radius: 50%;
+}
+
+.kingWhite::before {
+  content: "♕";
+  font-size: 32px;
+  color: gold;
+}
+
+.kingBlack {
+  width: 45px;
+  height: 45px;
+  background-color: black;
+  border-radius: 50%;
+}
+
+.kingBlack::before {
+  content: "♕";
+  font-size: 32px;
+  color: gold;
+}
 .captureWhite {
   background-color: red ;
 }
