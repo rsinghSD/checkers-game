@@ -28,7 +28,7 @@ International Draughts rules?
 2. Piece Movement & Capturing WORK
    * Ordinary Pieces DONE
      * Move one square diagonally forward into an unoccupied square
-   * Capturing
+   * Capturing DONE
      * If an enemy piece is adjacent, it can-and must-be captured by jumping over it to an unoccupied square directly beyond.
      * The capture move can be executed forward or backward.
      * If a capture is available, it must be taken, even if it puts the player at a disadvantage.
