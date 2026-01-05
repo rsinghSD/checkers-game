@@ -89,12 +89,12 @@ export default function ChessBoard() {
       setCanMove(false);
     }
 
-    if (value === 2 || value === 7 && playerOneTurn) {
+    if ((value === 2 || value === 7) && playerOneTurn) {
       if (value === 7)
         setIsCrowned(true);
       movePiece("white", boardIndex, rowIndex);
       setPlayerOneTurn(false);
-    } else if (value == 3 || value == 8 && !playerOneTurn) {
+    } else if ((value == 3 || value == 8 ) && !playerOneTurn) {
       if (value === 8)
         setIsCrowned(true);
       movePiece("black", boardIndex, rowIndex);
