@@ -12,7 +12,6 @@ Implementation of the board game Checkers, made for a Bachelor Software Developm
     - [Technical Requirements](#technical-requirements)
   - [Project Approach](#project-approach)
   - [Database Schema Design](#database-schema-design)
-    - [Backlogging](#backlogging)
 
 ## Requirements for the Game
 ### Functional Requirements
@@ -95,5 +94,3 @@ https://dbdiagram.io/d/Chess-Game-ERD-Diagram-6939cacde877c63074578dde
 
 ![database_schema_design](./docs/images/readme/chess_game_erd_diagram.png)
 
-### Backlogging
-The repo also includes a /docs/backlog folder with backlog markdown files. Those are personal backlogs to kind of keep track of what I did. These are includes, may you be interested and/or curious to see.
