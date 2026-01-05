@@ -2,6 +2,16 @@ import { useState } from "react";
 import "./ChessBoard.css";
 import Square from "./Square";
 
+/*
+  // value 0 = empty brown
+  // value 1 = empty white
+  // value 2 = occupied white 
+  // value 3 = occupied black 
+  // value 4 = movement box
+  // value 5 = white captureable
+  // value 6 = black captureable
+*/
+
 export default function ChessBoard() {
   const [boardState, setBoardState] = useState([
     [0, 2, 0, 2, 0, 2, 0, 2, 0, 2], // __
@@ -10,15 +20,15 @@ export default function ChessBoard() {
     [2, 0, 2, 0, 2, 0, 2, 0, 2, 0], // __
     [0, 1, 0, 1, 0, 1, 0, 1, 0, 1], // middle
     [1, 0, 1, 0, 1, 0, 1, 0, 1, 0], // zone
-    [0, 3, 0, 3, 0, 3, 0, 3, 0, 3], // __
+    [0, 3, 0, 3, 0, 1, 0, 3, 0, 3], // __
     [3, 0, 3, 0, 3, 0, 3, 0, 3, 0], // player (3)
     [0, 3, 0, 3, 0, 3, 0, 3, 0, 3], // two
     [3, 0, 3, 0, 3, 0, 3, 0, 3, 0], // __
   ]);
   const [prevPlayerPos, setPrevPlayerPos] = useState({ bI: -1, rI: -1 });
-  const [validMoves, setValidMoves] = useState<{ bI: number; rI: number }[]>(
-    []
-  );
+  const [validMoves, setValidMoves] = useState<{ bI: number; rI: number }[]>([]);
+  const [prevEnemyPos, setPrevEnemyPos] = useState({ bI: -1, rI: -1})
+  const [ValidCapturePoints, setValidCapturePoints] = useState<{ bI: number; rI: number }[]>([]);
   const [canMove, setCanMove] = useState(false);
   const [mustKill, setMustKill] = useState(false);
   const [playerOneTurn, setPlayerOneTurn] = useState(true);
@@ -29,11 +39,30 @@ export default function ChessBoard() {
     console.log(
       `val: ${value} | bI: ${boardIndex} | rI: ${rowIndex} | mustKill ${mustKill}`
     );
+
+    if (mustKill) {
+      const newBoard = boardState.map((row) => [...row]);
+      newBoard[prevPlayerPos.bI][prevPlayerPos.rI] = 1;
+      if (boardState[prevPlayerPos.bI][prevPlayerPos.rI] === 2) {
+        for (const cap of ValidCapturePoints) { // this was pretty much unneeded as its a single value
+          newBoard[cap.bI][cap.rI] = 2
+        }
+        setCapturedBlackPieces(+ 1);
+      } else if (boardState[prevPlayerPos.bI][prevPlayerPos.rI] === 3) {
+        for (const cap of ValidCapturePoints) {
+          newBoard[cap.bI][cap.rI] = 3
+        }
+        setCapturedWhitePieces(+ 1);
+      }
+      newBoard[prevEnemyPos.bI][prevEnemyPos.rI] = 1;
+      setBoardState(newBoard)
+      setMustKill(false);
+    }
+
     if (canMove) {
       // movement handler
       const newBoard = boardState.map((row) => [...row]);
       if (!mustKill && value == 4) {
-        setCanMove(false);
         newBoard[prevPlayerPos.bI][prevPlayerPos.rI] = 1;
         for (const move of validMoves) {
           newBoard[move.bI][move.rI] = 1;
@@ -44,26 +73,7 @@ export default function ChessBoard() {
         }
       }
       setBoardState(newBoard);
-    }
-
-    if (mustKill) {
-      // killer handler
-      const newBoard = boardState.map((row) => [...row]);
-      for (const move of validMoves) {
-        if (boardIndex === move.bI && rowIndex === move.rI) {
-          if (boardState[move.bI][move.rI] === 6) {
-            setCapturedBlackPieces(+1);
-            newBoard[move.bI][move.rI] = 2;
-          } else if (boardState[move.bI][move.rI] === 5) {
-            setCapturedWhitePieces(+1);
-            newBoard[move.bI][move.rI] = 3;
-          }
-          newBoard[prevPlayerPos.bI][prevPlayerPos.rI] = 1;
-          console.log("slaughter!");
-          setBoardState(newBoard);
-          setMustKill(false);
-        }
-      }
+      setCanMove(false);
     }
 
     if (value == 2 && playerOneTurn) {
@@ -81,54 +91,52 @@ export default function ChessBoard() {
     setBoardState(newBoard);
   }
 
-  function movementCheck(
-    turn: string,
-    boardIndex: number,
-    rowIndex: number,
-    newBoard: any
-  ) {
+  function movementCheck( turn: string, boardIndex: number, rowIndex: number, newBoard: any) {
     let tempValidMoves: { bI: number; rI: number }[] = [];
+    let tempValidCapturePoints: {bI: number; rI: number}[] = [];
+    const possibleRows = [rowIndex + 1, rowIndex - 1];
     setPrevPlayerPos({ bI: boardIndex, rI: rowIndex });
-    if (turn == "white") {
-      const boardIndexOne = boardIndex + 1;
-      const possibleRows = [rowIndex + 1, rowIndex - 1];
-      let tempMustKill = false;
-      for (let r of possibleRows) {
-        if (boardState[boardIndexOne][r] === 3) {
-          // capture black
-          console.log("white player can capture");
-          newBoard[boardIndexOne][r] = 6;
-          tempValidMoves.push({ bI: boardIndexOne, rI: r });
-          setValidMoves(tempValidMoves);
-          setMustKill(true), (tempMustKill = true);
-        }
-        if (boardState[boardIndexOne][r] === 1 && tempMustKill === false) {
-          // move normally
-          newBoard[boardIndexOne][r] = 4;
-          tempValidMoves.push({ bI: boardIndexOne, rI: r });
-        }
-      }
 
-      if (tempValidMoves.length >= 1) {
-        setValidMoves(tempValidMoves);
-        setCanMove(true);
-      }
-    } else if (turn == "black") {
-      const boardIndexOne = boardIndex + -1;
-      const possibleRows = [rowIndex + 1, rowIndex - 1];
+    let tempMustKill = false;
+    let boardIndexOne = boardIndex + 1;
+    let boardIndexTwo = boardIndex + 2;
 
-      for (let r of possibleRows) {
-        if (boardState[boardIndexOne][r] === 1) {
-          newBoard[boardIndexOne][r] = 4;
-          tempValidMoves.push({ bI: boardIndexOne, rI: r });
-        }
-      }
-
-      if (tempValidMoves.length >= 1) {
-        setValidMoves(tempValidMoves);
-        setCanMove(true);
-      }
+    let enemyValue = 3;
+    let capturableValue = 6;
+    if (turn === "black") { // avoids duplicated code by if turn === black.. white etc
+      boardIndexOne = boardIndex - 1;
+      boardIndexTwo = boardIndex - 2;
+      enemyValue = 2;
+      capturableValue = 5;
     }
+      for (let r of possibleRows) { 
+        const enemyRow = boardIndexOne;
+        const enemyCol = r;
+        const landingRow = boardIndexTwo;
+        const landingCol = enemyCol + (enemyCol - rowIndex);
+
+        if (boardState[enemyRow][enemyCol] === enemyValue && boardState[landingRow][landingCol] === 1) {        
+          setPrevEnemyPos({ bI: enemyRow, rI: enemyCol})
+          tempValidCapturePoints.push({bI: landingRow, rI: landingCol})
+          newBoard[enemyRow][enemyCol] = capturableValue
+          tempMustKill = true;
+          setMustKill(true);
+        }
+      }
+      for (let r of possibleRows) {
+        if (!tempMustKill){
+          if (boardState[boardIndexOne][r] === 1 && tempMustKill === false) {
+            newBoard[boardIndexOne][r] = 4;
+            tempValidMoves.push({ bI: boardIndexOne, rI: r });
+          }
+        }
+      }
+
+      if (tempValidMoves.length >= 1) {
+        setValidMoves(tempValidMoves);
+        setCanMove(true);
+      } else if (tempValidCapturePoints.length >= 1)
+        setValidCapturePoints(tempValidCapturePoints);
   }
 
   function TellPlayerTurn() {
@@ -139,6 +147,8 @@ export default function ChessBoard() {
   return (
     <div>
       <TellPlayerTurn />
+      <p>Player one got captured {capturedWhitePieces} times</p>
+      <p>Player two got captured {capturedBlackPieces} times</p>
       {boardState.map((row, boardIndex) => (
         <div key={boardIndex} className="chessRow">
           {row.map((value, rowIndex) => (
