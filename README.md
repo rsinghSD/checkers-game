@@ -34,7 +34,7 @@ International Draughts rules?
      * The capture move can be executed forward or backward.
      * If a capture is available, it must be taken, even if it puts the player at a disadvantage.
      * Captured pieces are removed from the board at the end of the turn
-3. Crowning (Kinging)
+3. Crowning (Kinging) DONE
    * A piece is crowned when it ends its turn on the farthest row of the board
    * Crowned pieces (kings) gain enhanced movement:
      * They can move multiple squares diagonally in any direction.
