@@ -83,11 +83,13 @@ Checklist:
 - [x] Pieces made using components (when stuck, think about tictactoe example in react docs)
 - [x] Pieces movement
 - [x] Switching players every play (local multiplayer)
-- [ ] Implement Capturing
+- [x] Implement Capturing
 - [ ] Implement Crowning
+- [ ] Multiple capture functionality
 - [ ] Add win conditions
-- [ ] Use RESTful API's to communicate and send POST/GET requests. Eventually link to game to be able to save/load board/game state.
-- [ ] Celebrate! (Maybe add some sound effects...)
+- [ ] Make game load/saveable
+- [ ] Celebrate!
+- [ ] Extras: Menu, load menu
 
 ## Database Schema Design
 https://dbdiagram.io/d/Chess-Game-ERD-Diagram-6939cacde877c63074578dde
