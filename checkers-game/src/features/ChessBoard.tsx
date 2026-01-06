@@ -13,29 +13,29 @@ import Square from "./Square";
 */
 
 export default function ChessBoard() {
-  const [boardState, setBoardState] = useState([
-    [0, 1, 0, 1, 0, 1, 0, 1, 0, 1], // __
-    [1, 0, 8, 0, 1, 0, 1, 0, 1, 0], // player (2)
-    [0, 2, 0, 1, 0, 1, 0, 1, 0, 1], // one
-    [1, 0, 1, 0, 1, 0, 1, 0, 1, 0], // __
+    const [boardState, setBoardState] = useState([
+    [0, 2, 0, 2, 0, 2, 0, 2, 0, 2], // __
+    [2, 0, 2, 0, 2, 0, 2, 0, 2, 0], // player (2)
+    [0, 2, 0, 2, 0, 2, 0, 2, 0, 2], // one
+    [2, 0, 2, 0, 2, 0, 2, 0, 2, 0], // __
     [0, 1, 0, 1, 0, 1, 0, 1, 0, 1], // middle
     [1, 0, 1, 0, 1, 0, 1, 0, 1, 0], // zone
-    [0, 1, 0, 1, 0, 1, 0, 1, 0, 1], // __
-    [1, 0, 1, 0, 1, 0, 3, 0, 1, 0], // player (3)
-    [0, 1, 0, 1, 0, 1, 0, 7, 0, 1], // two
-    [1, 0, 1, 0, 1, 0, 1, 0, 1, 0], // __
+    [0, 3, 0, 3, 0, 3, 0, 3, 0, 3], // __
+    [3, 0, 3, 0, 3, 0, 3, 0, 3, 0], // player (3)
+    [0, 3, 0, 3, 0, 3, 0, 3, 0, 3], // two
+    [3, 0, 3, 0, 3, 0, 3, 0, 3, 0], // __
   ]);
   //   const [boardState, setBoardState] = useState([
-  //   [0, 2, 0, 2, 0, 2, 0, 2, 0, 2], // __
-  //   [2, 0, 2, 0, 2, 0, 2, 0, 2, 0], // player (2)
-  //   [0, 2, 0, 2, 0, 2, 0, 2, 0, 2], // one
-  //   [2, 0, 2, 0, 2, 0, 2, 0, 2, 0], // __
+  //   [0, 1, 0, 1, 0, 1, 0, 1, 0, 1], // __
+  //   [1, 0, 8, 0, 1, 0, 1, 0, 1, 0], // player (2)
+  //   [0, 2, 0, 1, 0, 1, 0, 1, 0, 1], // one
+  //   [1, 0, 3, 0, 1, 0, 1, 0, 1, 0], // __
   //   [0, 1, 0, 1, 0, 1, 0, 1, 0, 1], // middle
-  //   [1, 0, 1, 0, 1, 0, 1, 0, 1, 0], // zone
-  //   [0, 3, 0, 3, 0, 3, 0, 3, 0, 3], // __
-  //   [3, 0, 3, 0, 3, 0, 3, 0, 3, 0], // player (3)
-  //   [0, 3, 0, 3, 0, 3, 0, 3, 0, 3], // two
-  //   [3, 0, 3, 0, 3, 0, 3, 0, 3, 0], // __
+  //   [1, 0, 1, 0, 1, 0, 3, 0, 1, 0], // zone
+  //   [0, 1, 0, 1, 0, 1, 0, 1, 0, 1], // __
+  //   [1, 0, 1, 0, 1, 0, 3, 0, 3, 0], // player (3)
+  //   [0, 1, 0, 1, 0, 1, 0, 7, 0, 1], // two
+  //   [1, 0, 1, 0, 1, 0, 1, 0, 1, 0], // __
   // ]);
   const [prevPlayerPos, setPrevPlayerPos] = useState({ bI: -1, rI: -1 });
   const [validMoves, setValidMoves] = useState<{ bI: number; rI: number }[]>([]);
@@ -58,12 +58,16 @@ export default function ChessBoard() {
       newBoard[prevPlayerPos.bI][prevPlayerPos.rI] = 1;
       if (boardState[prevPlayerPos.bI][prevPlayerPos.rI] === 2 || boardState[prevPlayerPos.bI][prevPlayerPos.rI] === 7) {
         for (const cap of ValidCapturePoints) { // this was pretty much unneeded as its a single value
-          newBoard[cap.bI][cap.rI] = 2
+          let playerVal = 2;
+          if(isCrowned) playerVal = 7;
+          newBoard[cap.bI][cap.rI] = playerVal;
         }
         setCapturedBlackPieces(+ 1);
       } else if (boardState[prevPlayerPos.bI][prevPlayerPos.rI] === 3 || boardState[prevPlayerPos.bI][prevPlayerPos.rI] === 8) {
         for (const cap of ValidCapturePoints) {
-          newBoard[cap.bI][cap.rI] = 3
+          let playerVal = 3;
+          if(isCrowned) playerVal = 8;
+          newBoard[cap.bI][cap.rI] = playerVal;
         }
         setCapturedWhitePieces(+ 1);
       }
@@ -77,7 +81,7 @@ export default function ChessBoard() {
     if (canMove) {
       let playerPieceValue = 2;
       let crownPieceValue = 7;
-      if(playerOneTurn) {
+      if (playerOneTurn) {
         playerPieceValue = 3
         crownPieceValue = 8;
       }
@@ -119,8 +123,6 @@ export default function ChessBoard() {
       setPlayerOneTurn(true);
     }
   }
-  console.log(boardState)
-
   function movePiece(turn: string, boardIndex: number, rowIndex: number) {
     const newBoard = boardState.map((row) => [...row]);
     movementCheck(turn, boardIndex, rowIndex, newBoard);
@@ -141,11 +143,11 @@ export default function ChessBoard() {
     setPrevPlayerPos({ bI: boardIndex, rI: rowIndex });
 
     let tempMustKill = false;
-    let crownable = false;
     let boardIndexOne = boardIndex + 1;
     let boardIndexTwo = boardIndex + 2;
 
     let enemyValue = 3;
+    let rowDirection = 1;
     let capturableValue = 6;
     let crownValue = 7
     let crownRow = 9;
@@ -156,6 +158,8 @@ export default function ChessBoard() {
       boardIndexTwo = boardIndex - 2;
       enemyValue = 2;
       capturableValue = 5;
+      rowDirection = -1;
+
       crownValue = 8;
       crownRow = 0;
     }
@@ -165,21 +169,26 @@ export default function ChessBoard() {
       for (let r of possibleRows) { 
         const enemyRow = boardIndexOne;
         const enemyCol = r;
-        const landingRow = boardIndexTwo;
+        if (tempIsCrowned) {
+          rowDirection = enemyRow < boardIndex ? -1 : 1;
+        }
+
+        const landingRow = boardIndexTwo
         const landingCol = enemyCol + (enemyCol - rowIndex);
 
         if(boardIndexOne === crownRow) {
-          crownable = true;
           setIsCrowned(true);
           console.log("crowning possible @ ", boardIndexOne)
         }
-        if (
+
+        if ( // Kill detection for normal pieces
+          (!tempIsCrowned) &&
           enemyRow >= 0 && enemyRow < boardState.length &&
           enemyCol >= 0 && enemyCol < boardState[enemyRow].length &&
           landingRow >= 0 && landingRow < boardState.length &&
           landingCol >= 0 && landingCol < boardState[landingRow].length
         ) {
-          if (boardState[enemyRow][enemyCol] === enemyValue && boardState[landingRow][landingCol] === 1) {    
+          if ((boardState[enemyRow][enemyCol] === enemyValue || boardState[enemyRow][enemyCol] === crownValue) && boardState[landingRow][landingCol] === 1) {    
             console.log("kill detection on")    
             setPrevEnemyPos({ bI: enemyRow, rI: enemyCol})
             tempValidCapturePoints.push({bI: landingRow, rI: landingCol})
@@ -188,11 +197,46 @@ export default function ChessBoard() {
             setMustKill(true);
           }
         }
+
+        if (tempIsCrowned) { // Kill detection for crowned pieces
+          for (let r of possibleRows) {
+            for (let m of possibleCrownMovement) {
+              const dRow = m - boardIndex;
+              const dCol = r - rowIndex;
+
+              const enemyRow = m;
+              const enemyCol = r;
+
+              const landingRow = enemyRow + dRow;
+              const landingCol = enemyCol + dCol;
+
+              if (
+                landingRow >= 0 && landingRow < boardState.length &&
+                landingCol >= 0 && landingCol < boardState[landingRow].length
+              ) {
+                if (
+                  (boardState[enemyRow][enemyCol] === enemyValue || boardState[enemyRow][enemyCol] == crownValue) 
+                  && boardState[landingRow][landingCol] === 1
+                ) {
+                  console.log("CROWN kill detection on");
+                  setPrevEnemyPos({bI: enemyRow, rI: enemyCol});
+                  tempValidCapturePoints.push({bI: landingRow, rI: landingCol});
+                  newBoard[enemyRow][enemyCol] = capturableValue;
+                  tempMustKill = true;
+                  setMustKill(true);
+                }
+              }
+            }
+          }
+        
+        }
       }
-      for (let r of possibleRows) {
+
+
+      for (let r of possibleRows) { 
         for(let m of possibleCrownMovement) {
           if (m >= 0 && m < boardState.length && r >= 0 && r < boardState[m].length) {
-            if (tempIsCrowned){
+            if (tempIsCrowned && !tempMustKill){
               if (boardState[m][r] === 1) {
                 newBoard[m][r] = 4;
                 tempValidMoves.push({bI: m, rI: r})
@@ -216,9 +260,6 @@ export default function ChessBoard() {
         setValidCapturePoints(tempValidCapturePoints);
   }
 
-  function crownedPlayerMovement() {
-
-  }
   function TellPlayerTurn() {
     if (playerOneTurn) return <h2>It's your turn: Player One</h2>;
     else return <h2>It's your turn: Player Two</h2>;

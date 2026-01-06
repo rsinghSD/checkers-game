@@ -4,7 +4,7 @@
 <!-- HTML support in Markdown is pretty epic :) -->
 
 # checkers-game
-Implementation of the board game Checkers, made for a Bachelor Software Development Selection Test. Bit Academy project.  
+Implementation of the board game Checkers written in React/Typescript, made for a Bachelor Software Development Selection Test.
 
 - [checkers-game](#checkers-game)
   - [Requirements for the Game](#requirements-for-the-game)
@@ -84,12 +84,12 @@ Checklist:
 - [x] Pieces movement
 - [x] Switching players every play (local multiplayer)
 - [x] Implement Capturing
-- [ ] Implement Crowning
+- [x] Implement Crowning
 - [ ] Multiple capture functionality
 - [ ] Add win conditions
 - [ ] Make game load/saveable
 - [ ] Celebrate!
-- [ ] Extras: Menu, load menu
+- [ ] Extras: Menu, load menu, boardState editor for custom chess piece movement
 
 ## Database Schema Design
 https://dbdiagram.io/d/Chess-Game-ERD-Diagram-6939cacde877c63074578dde
