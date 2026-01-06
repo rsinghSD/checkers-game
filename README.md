@@ -4,15 +4,16 @@
 <!-- HTML support in Markdown is pretty epic :) -->
 
 # checkers-game
-Implementation of the board game Checkers, made for a Bachelor Software Development Selection Test. Bit Academy project.  
+Implementation of the board game Checkers written in React/Typescript, made for a Bachelor Software Development Selection Test.
 
 - [checkers-game](#checkers-game)
   - [Requirements for the Game](#requirements-for-the-game)
     - [Functional Requirements](#functional-requirements)
     - [Technical Requirements](#technical-requirements)
   - [Project Approach](#project-approach)
+  - [Checklist](#checklist)
   - [Database Schema Design](#database-schema-design)
-    - [Backlogging](#backlogging)
+  - [Known bugs](#known-bugs)
 
 ## Requirements for the Game
 ### Functional Requirements
@@ -72,20 +73,23 @@ Sketch Tech Requirements: https://excalidraw.com/#json=0ZG0RR9ANdlzGIymjwLD0,Xhr
 Frontend: Vite + React + Node  
 Backend: Node.JS, AWS (Lambda, API Gateway)  
 
+## Checklist  
 
 Checklist:  
 - [x] Get to know how to play checkers and how it works
 - [x] Database Schema Design (ERD?)
 - [x] Stack-preparation/database-create
 - [x] Basic Board made
-- [ ] Pieces made using components (when stuck, think about tictactoe example in react docs)
-- [ ] Pieces movement
-- [ ] Switching players every play (local multiplayer)
-- [ ] Implement Capturing
-- [ ] Implement Crowning
+- [x] Pieces made using components (when stuck, think about tictactoe example in react docs)
+- [x] Pieces movement
+- [x] Switching players every play (local multiplayer)
+- [x] Implement Capturing
+- [x] Implement Crowning
+- [ ] Multiple capture functionality
 - [ ] Add win conditions
-- [ ] Use RESTful API's to communicate and send POST/GET requests. Eventually link to game to be able to save/load board/game state.
-- [ ] Celebrate! (Maybe add some sound effects...)
+- [ ] Make game load/saveable
+- [ ] Celebrate!
+- [ ] Extras: Menu, load menu, boardState editor for custom chess piece movement
 
 ## Database Schema Design
 https://dbdiagram.io/d/Chess-Game-ERD-Diagram-6939cacde877c63074578dde
@@ -95,5 +99,5 @@ https://dbdiagram.io/d/Chess-Game-ERD-Diagram-6939cacde877c63074578dde
 
 ![database_schema_design](./docs/images/readme/chess_game_erd_diagram.png)
 
-### Backlogging
-The repo also includes a /docs/backlog folder with backlog markdown files. Those are personal backlogs to kind of keep track of what I did. These are includes, may you be interested and/or curious to see.
+## Known bugs  
+See [Issues page](https://github.com/Bambaclad1/checkers-game/issues)
