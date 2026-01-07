@@ -7,7 +7,7 @@ LEFT TO DO: (part of all nighter)
 - [ ] Fix kings not able to eat other (kings?)
 - [ ] Multiple capture functionality
 - [ ] Add win conditions
-- [ ] add install doc on readme
+- [x] add install doc on readme
 - [ ] fix bugs...
 - [ ] 
 # checkers-game
