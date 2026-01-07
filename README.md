@@ -3,10 +3,18 @@
 </h1> 
 <!-- HTML support in Markdown is pretty epic :) -->
 
+LEFT TO DO: (part of all nighter)
+- [ ] Fix kings not able to eat other (kings?)
+- [ ] Multiple capture functionality
+- [ ] Add win conditions
+- [ ] add install doc on readme
+- [ ] fix bugs...
+- [ ] 
 # checkers-game
 Implementation of the board game Checkers written in React/Typescript, made for a Bachelor Software Development Selection Test.
 
 - [checkers-game](#checkers-game)
+  - [Setup guide](#setup-guide)
   - [Requirements for the Game](#requirements-for-the-game)
     - [Functional Requirements](#functional-requirements)
     - [Technical Requirements](#technical-requirements)
@@ -15,6 +23,24 @@ Implementation of the board game Checkers written in React/Typescript, made for 
   - [Database Schema Design](#database-schema-design)
   - [Known bugs](#known-bugs)
   - [SQL Database Code](#sql-database-code)
+
+## Setup guide
+
+Assuming you're using bash, powershell, anything which supports unix command:
+
+1. Clone the project locally first.
+```bash
+git clone https://github.com/Bambaclad1/checkers-game
+```
+
+2. cd into the directory.
+```bash
+cd .\checkers-game\checkers-game
+```
+
+3. run `npm install` to install neccesary packages.
+
+4. run `npm run dev` in your terminal and open the localhost window
 
 ## Requirements for the Game
 ### Functional Requirements
