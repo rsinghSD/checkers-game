@@ -35,18 +35,6 @@ export default function ChessBoard({status, loadGame, game_id}: ChessBoardProps)
     [0, 3, 0, 3, 0, 3, 0, 3, 0, 3], // two
     [3, 0, 3, 0, 3, 0, 3, 0, 3, 0], // __
   ]);
-  //   const [boardState, setBoardState] = useState([
-  //   [0, 1, 0, 1, 0, 1, 0, 1, 0, 1], // __
-  //   [1, 0, 8, 0, 1, 0, 1, 0, 1, 0], // player (2)
-  //   [0, 2, 0, 1, 0, 1, 0, 1, 0, 1], // one
-  //   [1, 0, 3, 0, 1, 0, 1, 0, 1, 0], // __
-  //   [0, 1, 0, 1, 0, 1, 0, 1, 0, 1], // middle
-  //   [1, 0, 1, 0, 1, 0, 3, 0, 1, 0], // zone
-  //   [0, 1, 0, 1, 0, 1, 0, 1, 0, 1], // __
-  //   [1, 0, 1, 0, 1, 0, 3, 0, 3, 0], // player (3)
-  //   [0, 1, 0, 1, 0, 1, 0, 7, 0, 1], // two
-  //   [1, 0, 1, 0, 1, 0, 1, 0, 1, 0], // __
-  // ]);
   const [gameId, setGameId] = useState("Awaiting response from server...");
   const [saveGame, setSaveGame] = useState(false);
   const [isSetup, setIsSetup] = useState(false);
@@ -77,6 +65,12 @@ export default function ChessBoard({status, loadGame, game_id}: ChessBoardProps)
       setGameId("Please wait...")
       if (status === "saved" && loadGame === true) {
         const body = await GetExistingGame(game_id)
+
+        if (body === "Not Found") {
+          setGameId(`Game "${game_id}" not found. Try again.`)
+          loadGame = false;
+          return;
+        }
         if (body.message[0].game_id && loadGame === true)  {
           const res = body.message[0]
           const player_state = JSON.parse(res.player_state);

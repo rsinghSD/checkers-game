@@ -8,6 +8,10 @@ export default async function GetExistingGame(game_id: string){
         }
 
         const result = await response.json();
+
+        if (result.message.length < 1) {
+            return "Not Found";
+        }
         return result;
 }
 

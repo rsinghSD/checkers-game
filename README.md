@@ -52,14 +52,14 @@ International Draughts rules?
     * Method for moving the piece once selected is whatever you want
 2. Local Multiplayer: DONE
     * The game supports two players on one PC. No need for extra fancy stuff.
-3. Game Persistance:
+3. Game Persistance: DONE
     * Saving:
       * Provide a option for player to save current game state
       * Upon saving, game state stored in DB. Unique gameId displayed.
     * Loading:
       * Allow players to resume a saved game by entering corrosponding gameId. Loads and retrieves selected game state
       * Unknown gameId entered, proper error (404) displayed
-4. Communication & API:
+4. Communication & API: DONE
     * Communication between frontend and backend uses RESTful API
 5. Version Control: DONE
     * Use Git for version managemtn
@@ -88,7 +88,7 @@ Checklist:
 - [x] Implement Crowning
 - [ ] Multiple capture functionality
 - [ ] Add win conditions
-- [ ] Make game load/saveable
+- [x] Make game load/saveable
 - [ ] Celebrate!
 - [ ] Extras: Menu, load menu, boardState editor for custom chess piece movement
 
