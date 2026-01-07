@@ -14,6 +14,7 @@ Implementation of the board game Checkers written in React/Typescript, made for 
   - [Checklist](#checklist)
   - [Database Schema Design](#database-schema-design)
   - [Known bugs](#known-bugs)
+  - [SQL Database Code](#sql-database-code)
 
 ## Requirements for the Game
 ### Functional Requirements
@@ -101,3 +102,23 @@ https://dbdiagram.io/d/Chess-Game-ERD-Diagram-6939cacde877c63074578dde
 
 ## Known bugs  
 See [Issues page](https://github.com/Bambaclad1/checkers-game/issues)
+
+## SQL Database Code
+personal header for saving the code to make the database
+
+```sql
+-- makes basic checkers table  
+
+CREATE SCHEMA IF NOT EXISTS main;
+
+DROP TABLE main.game;
+
+CREATE TABLE IF NOT EXISTS main.game (
+    game_id VARCHAR(255) PRIMARY KEY,
+    board_state TEXT NOT NULL,
+    player_state TEXT NOT NULL,
+    player_one_turn BOOL NOT NULL,
+    status VARCHAR(20) NOT NULL
+);
+
+```

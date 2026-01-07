@@ -1,7 +1,10 @@
 import { useState } from "react";
+import { useEffect } from "react";
 import "./ChessBoard.css";
 import Square from "./Square";
-
+import CreateNewGame from "./CreateNewGame"
+import SaveGame from "./SaveGame";
+import GetExistingGame from "./GetExistingGame";
 /*
   // value 0 = empty brown
   // value 1 = empty white
@@ -10,9 +13,16 @@ import Square from "./Square";
   // value 4 = movement box
   // value 5 = white captureable
   // value 6 = black captureable
+  // value 7 = white crowned
+  // value 8 = black crowned
 */
 
-export default function ChessBoard() {
+interface ChessBoardProps {
+  status: string;
+  loadGame: boolean;
+  game_id: string;
+}
+export default function ChessBoard({status, loadGame, game_id}: ChessBoardProps) {
     const [boardState, setBoardState] = useState([
     [0, 2, 0, 2, 0, 2, 0, 2, 0, 2], // __
     [2, 0, 2, 0, 2, 0, 2, 0, 2, 0], // player (2)
@@ -37,6 +47,9 @@ export default function ChessBoard() {
   //   [0, 1, 0, 1, 0, 1, 0, 7, 0, 1], // two
   //   [1, 0, 1, 0, 1, 0, 1, 0, 1, 0], // __
   // ]);
+  const [gameId, setGameId] = useState("Awaiting response from server...");
+  const [saveGame, setSaveGame] = useState(false);
+  const [isSetup, setIsSetup] = useState(false);
   const [prevPlayerPos, setPrevPlayerPos] = useState({ bI: -1, rI: -1 });
   const [validMoves, setValidMoves] = useState<{ bI: number; rI: number }[]>([]);
   const [prevEnemyPos, setPrevEnemyPos] = useState({ bI: -1, rI: -1})
@@ -47,6 +60,72 @@ export default function ChessBoard() {
   const [capturedWhitePieces, setCapturedWhitePieces] = useState(0);
   const [capturedBlackPieces, setCapturedBlackPieces] = useState(0);
   const [isCrowned, setIsCrowned] = useState(false); // if current piece is crowned
+
+  useEffect(() => {
+    async function initGame() {
+      if (!isSetup && status === "started") {
+        const gameId = await CreateNewGame();
+        setGameId(gameId);
+        setIsSetup(true);
+      }
+    }
+    initGame();
+  }, [isSetup, status])
+
+  useEffect(() => {
+    async function getGame() {
+      setGameId("Please wait...")
+      if (status === "saved" && loadGame === true) {
+        const body = await GetExistingGame(game_id)
+        if (body.message[0].game_id && loadGame === true)  {
+          const res = body.message[0]
+          const player_state = JSON.parse(res.player_state);
+
+          setBoardState(JSON.parse(res.board_state))
+          setCanMove(player_state.can_move);
+          setCapturedBlackPieces(player_state.captured_black_pieces);
+          setCapturedWhitePieces(player_state.captured_white_pieces);
+          setMustKill(player_state.must_kill)
+          setPrevEnemyPos(player_state.prev_enemy_pos);
+          setPrevPlayerPos(player_state.prev_player_pos);
+          setValidCapturePoints(player_state.valid_capture_points);
+          setValidMoves(player_state.valid_moves)
+          setPlayerOneTurn(res.player_one_turn);
+          setGameId(res.game_id);
+        }
+      }
+    }
+    getGame();
+  }, [])
+
+
+  useEffect(() => {
+    async function saveTheGame() {
+      if (saveGame) {
+        console.log("Save triggered.");
+        const body = {
+          game_id: gameId,
+          board_state: boardState,
+          player_state: {
+            prev_player_pos: prevPlayerPos,
+            valid_moves: validMoves,
+            prev_enemy_pos: prevEnemyPos,
+            valid_capture_points: ValidCapturePoints,
+            can_move: canMove,
+            must_kill: mustKill, 
+            player_one_turn: playerOneTurn,
+            captured_white_pieces: capturedWhitePieces,
+            captured_black_pieces: capturedBlackPieces
+          },
+          player_one_turn: playerOneTurn
+        }
+        await SaveGame(body);
+        alert("Game has been saved, you may quit the checkers session now.")
+      }
+    }
+
+    saveTheGame();
+  }, [saveGame])
 
   function handleClick(value: number, boardIndex: number, rowIndex: number) {
     console.log(
@@ -129,12 +208,7 @@ export default function ChessBoard() {
     setBoardState(newBoard);
   }
 
-  function fixExtraMovementBoxes() {
-    // const newBoard = boardState.map(row =>
-    //   row.map(value => (value === 4 ? 1 : value))
-    // );
-    // setBoardState(newBoard);
-  }
+
   function movementCheck( turn: string, boardIndex: number, rowIndex: number, newBoard: any) {
     let tempValidMoves: { bI: number; rI: number }[] = [];
     let tempValidCapturePoints: {bI: number; rI: number}[] = [];
@@ -283,6 +357,8 @@ export default function ChessBoard() {
           ))}
         </div>
       ))}
+      <p>gameId: {gameId}</p>
+      <button className="menuButtony" onClick={() => setSaveGame (true)}>Save Game</button>
     </div>
   );
 }
