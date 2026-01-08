@@ -7,6 +7,7 @@
 Implementation of the board game Checkers written in React/Typescript, made for a Bachelor Software Development Selection Test.
 
 - [checkers-game](#checkers-game)
+  - [Setup guide](#setup-guide)
   - [Requirements for the Game](#requirements-for-the-game)
     - [Functional Requirements](#functional-requirements)
     - [Technical Requirements](#technical-requirements)
@@ -14,11 +15,31 @@ Implementation of the board game Checkers written in React/Typescript, made for 
   - [Checklist](#checklist)
   - [Database Schema Design](#database-schema-design)
   - [Known bugs](#known-bugs)
+  - [SQL Database Code](#sql-database-code)
+
+## Setup guide
+
+Assuming you're using bash, powershell, anything which supports unix command:
+
+1. Clone the project locally first.
+```bash
+git clone https://github.com/Bambaclad1/checkers-game
+```
+
+2. cd into the directory.
+```bash
+cd .\checkers-game\checkers-game
+```
+
+3. run `npm install` to install neccesary packages.
+
+4. run `npm run dev` in your terminal and open the localhost window
+
+The backend code is written in AWS lambda, thus is not debuggable from the github repo. You can acesss it in /backend however.
 
 ## Requirements for the Game
 ### Functional Requirements
 
-International Draughts rules?
 
 1. Game Board & Setup DONE
    * Board contains of 10x10 squares with alternating dark and light colors.
@@ -39,7 +60,7 @@ International Draughts rules?
    * Crowned pieces (kings) gain enhanced movement:
      * They can move multiple squares diagonally in any direction.
      * They may jump over and capture an opponnent's piece from a distance, with the freedom to choose their landing square beyond the jumped piece
-4. Win Condition:
+4. Win Condition: DONE-ish
    * A player loses if they have no valid moves remaining. This situation arises if:
      * The player has no remaining pieces
      * All pieces are blocked by the opponents pieces and cannot move.
@@ -51,14 +72,14 @@ International Draughts rules?
     * Method for moving the piece once selected is whatever you want
 2. Local Multiplayer: DONE
     * The game supports two players on one PC. No need for extra fancy stuff.
-3. Game Persistance:
+3. Game Persistance: DONE
     * Saving:
       * Provide a option for player to save current game state
       * Upon saving, game state stored in DB. Unique gameId displayed.
     * Loading:
       * Allow players to resume a saved game by entering corrosponding gameId. Loads and retrieves selected game state
       * Unknown gameId entered, proper error (404) displayed
-4. Communication & API:
+4. Communication & API: DONE
     * Communication between frontend and backend uses RESTful API
 5. Version Control: DONE
     * Use Git for version managemtn
@@ -87,7 +108,7 @@ Checklist:
 - [x] Implement Crowning
 - [ ] Multiple capture functionality
 - [ ] Add win conditions
-- [ ] Make game load/saveable
+- [x] Make game load/saveable
 - [ ] Celebrate!
 - [ ] Extras: Menu, load menu, boardState editor for custom chess piece movement
 
@@ -101,3 +122,23 @@ https://dbdiagram.io/d/Chess-Game-ERD-Diagram-6939cacde877c63074578dde
 
 ## Known bugs  
 See [Issues page](https://github.com/Bambaclad1/checkers-game/issues)
+
+## SQL Database Code
+personal header for saving the code to make the database
+
+```sql
+-- makes basic checkers table  
+
+CREATE SCHEMA IF NOT EXISTS main;
+
+DROP TABLE main.game;
+
+CREATE TABLE IF NOT EXISTS main.game (
+    game_id VARCHAR(255) PRIMARY KEY,
+    board_state TEXT NOT NULL,
+    player_state TEXT NOT NULL,
+    player_one_turn BOOL NOT NULL,
+    status VARCHAR(20) NOT NULL
+);
+
+```
