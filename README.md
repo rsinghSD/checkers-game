@@ -3,8 +3,14 @@
 </h1> 
 <!-- HTML support in Markdown is pretty epic :) -->
 
+MINIMAL REQ:
+- [x] fix king capturing others
+- [ ] implement multi capturing
+- [ ] win conditions
+
 LEFT TO DO: (part of all nighter)
 - [ ] Fix kings not able to eat other (kings?)
+- [ ] implement FORCE EAT
 - [ ] Multiple capture functionality
 - [ ] Add win conditions
 - [x] add install doc on readme

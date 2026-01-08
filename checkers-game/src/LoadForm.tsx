@@ -32,7 +32,7 @@ export default function LoadForm() {
                         b766bc4b-6171-453e-b008-467c5a186ecb - chaos v3 <br />
                         82b667a4-f766-4005-8e8f-6b16aa2aa3e9 - example game <br />
                         318864b7-6bc8-438b-859b-57c93d87deb8 - crowned testing <br />
-                        f0eb9a7d-f2ad-46af-92e1-455091c23461 - triangle of checkers <br />
+                        825f7ba5-93e1-4642-9e41-987d5010560f - circles <br />
                         247f260a-712e-4b15-8af0-ab0fe6058c19 - test 101 (avg developer sandbox) <br />
                         936dc6b3-a54c-4d38-ab60-f5daaa6c826e - broken movement spaces <br />
                         19fff7e5-208d-4c4f-baaf-f9eead185670 - kings vs kings <br />
@@ -41,8 +41,6 @@ export default function LoadForm() {
                         </p>
                     </>
                 }
-
-
                 {showChess && (
                     <ChessBoard status="saved" loadGame={true} game_id={gameId} />
                 )}
