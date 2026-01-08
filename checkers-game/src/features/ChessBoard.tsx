@@ -24,29 +24,17 @@ interface ChessBoardProps {
 }
 export default function ChessBoard({status, loadGame, game_id}: ChessBoardProps) {
     const [boardState, setBoardState] = useState([
-    [0, 1, 0, 1, 0, 1, 0, 1, 0, 1], // __
-    [1, 0, 2, 0, 1, 0, 2, 0, 1, 0], // player (2)
-    [0, 3, 0, 3, 0, 3, 0, 2, 0, 1], // one
-    [1, 0, 2, 0, 1, 0, 3, 0, 1, 0], // __
+    [0, 2, 0, 2, 0, 2, 0, 2, 0, 2], // __
+    [2, 0, 2, 0, 2, 0, 2, 0, 2, 0], // player (2)
+    [0, 2, 0, 2, 0, 2, 0, 2, 0, 2], // one
+    [2, 0, 2, 0, 2, 0, 2, 0, 2, 0], // __
     [0, 1, 0, 1, 0, 1, 0, 1, 0, 1], // middle
-    [1, 0, 8, 0, 1, 0, 8, 0, 1, 0], // zone
-    [0, 8, 0, 7, 0, 7, 0, 7, 0, 1], // __
-    [1, 0, 7, 0, 1, 0, 8, 0, 1, 0], // player (3)
-    [0, 1, 0, 1, 0, 1, 0, 1, 0, 1], // two
-    [1, 0, 1, 0, 1, 0, 1, 0, 1, 0], // __
+    [1, 0, 1, 0, 1, 0, 1, 0, 1, 0], // zone
+    [0, 3, 0, 3, 0, 3, 0, 3, 0, 3], // __
+    [3, 0, 3, 0, 3, 0, 3, 0, 3, 0], // player (3)
+    [0, 3, 0, 3, 0, 3, 0, 3, 0, 3], // two
+    [3, 0, 3, 0, 3, 0, 3, 0, 3, 0], // __
   ]);
-  //   const [boardState, setBoardState] = useState([
-  //   [0, 2, 0, 2, 0, 2, 0, 2, 0, 2], // __
-  //   [2, 0, 2, 0, 2, 0, 2, 0, 2, 0], // player (2)
-  //   [0, 2, 0, 2, 0, 2, 0, 2, 0, 2], // one
-  //   [2, 0, 2, 0, 2, 0, 2, 0, 2, 0], // __
-  //   [0, 1, 0, 1, 0, 1, 0, 1, 0, 1], // middle
-  //   [1, 0, 1, 0, 1, 0, 1, 0, 1, 0], // zone
-  //   [0, 3, 0, 3, 0, 3, 0, 3, 0, 3], // __
-  //   [3, 0, 3, 0, 3, 0, 3, 0, 3, 0], // player (3)
-  //   [0, 3, 0, 3, 0, 3, 0, 3, 0, 3], // two
-  //   [3, 0, 3, 0, 3, 0, 3, 0, 3, 0], // __
-  // ]);
   const [gameId, setGameId] = useState("Awaiting response from server...");
   const [saveGame, setSaveGame] = useState(false);
   const [isSetup, setIsSetup] = useState(false);
@@ -55,6 +43,8 @@ export default function ChessBoard({status, loadGame, game_id}: ChessBoardProps)
   const [prevEnemyPos, setPrevEnemyPos] = useState({ bI: -1, rI: -1})
   const [ValidCapturePoints, setValidCapturePoints] = useState<{landing: {bI: number; rI: number}; enemy: {bI: number; rI: number}}[]>([]);
   const [canMove, setCanMove] = useState(false);
+  const [lockedPiece, setLockedPiece] = useState({ bI: -1, rI: -1})
+  const [pieceIsLocked, setPieceIsLocked] = useState(false);
   const [mustKill, setMustKill] = useState(false);
   const [playerOneTurn, setPlayerOneTurn] = useState(true);
   const [capturedWhitePieces, setCapturedWhitePieces] = useState(0);
@@ -92,6 +82,8 @@ export default function ChessBoard({status, loadGame, game_id}: ChessBoardProps)
           setCapturedBlackPieces(player_state.captured_black_pieces);
           setCapturedWhitePieces(player_state.captured_white_pieces);
           setMustKill(player_state.must_kill)
+          setLockedPiece(player_state.locked_piece)
+          setPieceIsLocked(player_state.piece_is_locked)
           setPrevEnemyPos(player_state.prev_enemy_pos);
           setPrevPlayerPos(player_state.prev_player_pos);
           setValidCapturePoints(player_state.valid_capture_points);
@@ -118,6 +110,8 @@ export default function ChessBoard({status, loadGame, game_id}: ChessBoardProps)
             prev_enemy_pos: prevEnemyPos,
             valid_capture_points: ValidCapturePoints,
             can_move: canMove,
+            locked_piece: lockedPiece,
+            piece_is_locked: pieceIsLocked,
             must_kill: mustKill, 
             player_one_turn: playerOneTurn,
             captured_white_pieces: capturedWhitePieces,
@@ -125,6 +119,7 @@ export default function ChessBoard({status, loadGame, game_id}: ChessBoardProps)
           },
           player_one_turn: playerOneTurn
         }
+
         await SaveGame(body);
         alert("Game has been saved, you may quit the checkers session now.")
       }
@@ -135,45 +130,77 @@ export default function ChessBoard({status, loadGame, game_id}: ChessBoardProps)
 
   function handleClick(value: number, boardIndex: number, rowIndex: number) {
     console.log(
-      `val: ${value} | bI: ${boardIndex} | rI: ${rowIndex} | mustKill ${mustKill} | isCrowned ${isCrowned}`
+      `val: ${value} | bI: ${boardIndex} | rI: ${rowIndex} | mustKill ${mustKill} | isCrowned ${isCrowned} | lockedPiece ${lockedPiece.bI} ${lockedPiece.rI}`
     );
 
-if (mustKill) {
-  const capture = ValidCapturePoints.find(c =>
-    c.landing.bI === boardIndex && c.landing.rI === rowIndex
-  );
+    let tempCanMove = false;
+    if (canMove) tempCanMove = true;
+    if (mustKill) {
+      if (!pieceIsLocked) {
+        setLockedPiece({bI: boardIndex, rI: rowIndex});
+        setPieceIsLocked(true);
+      }
+      if (lockedPiece) {
+        if (boardIndex !== lockedPiece.bI || rowIndex !== lockedPiece.rI)
+          return;
+      }
 
-  if (!capture) return;
+      const capture = ValidCapturePoints.find(c =>
+        c.landing.bI === boardIndex && c.landing.rI === rowIndex
+      );
 
-  const newBoard = boardState.map(row => [...row]);
+      if (!capture) return;
 
-  let enemyValue = newBoard[capture.enemy.bI][capture.enemy.rI];
-  let playerValue = newBoard[prevPlayerPos.bI][prevPlayerPos.rI];
+      const newBoard = boardState.map(row => [...row]);
 
-  if (enemyValue = 5) enemyValue = 3;
-  else enemyValue = 2;
-  
-    ValidCapturePoints.forEach(c => {
-    newBoard[c.enemy.bI][c.enemy.rI] = enemyValue; // 5 or 6
-  });
-  newBoard[prevPlayerPos.bI][prevPlayerPos.rI] = 1;
-  newBoard[capture.landing.bI][capture.landing.rI] = boardState[prevPlayerPos.bI][prevPlayerPos.rI];
+      let enemyValue = newBoard[capture.enemy.bI][capture.enemy.rI];
+      let playerValue = newBoard[prevPlayerPos.bI][prevPlayerPos.rI];
 
-  if(canCrown(playerValue, capture.landing.bI)) {
-    if (playerValue === 2) newBoard[capture.landing.bI][capture.landing.rI] = 7
-    if (playerValue === 3) newBoard[capture.landing.bI][capture.landing.rI] = 8
-  }
-  
-  newBoard[capture.enemy.bI][capture.enemy.rI] = 1;
+        ValidCapturePoints.forEach(c => {
+        newBoard[c.enemy.bI][c.enemy.rI] = enemyValue; // 5 or 6
+      });
 
-  setBoardState(newBoard);
-  setMustKill(false);
-  setValidCapturePoints([]);
-}
+      newBoard[prevPlayerPos.bI][prevPlayerPos.rI] = 1;
+      newBoard[capture.landing.bI][capture.landing.rI] = boardState[prevPlayerPos.bI][prevPlayerPos.rI];
+
+      if(canCrown(playerValue, capture.landing.bI)) {
+        if (playerValue === 2) newBoard[capture.landing.bI][capture.landing.rI] = 7
+        if (playerValue === 3) newBoard[capture.landing.bI][capture.landing.rI] = 8
+      }
+      
+      newBoard[capture.enemy.bI][capture.enemy.rI] = 1;
+
+      setBoardState(newBoard);
+
+      const moreCaptures = ValidCapturePoints.filter(c => 
+        c.enemy.bI !== capture.enemy.bI || c.enemy.rI !== capture.enemy.rI
+      );
+
+      if (moreCaptures.length > 0) {
+        setValidCapturePoints(moreCaptures);
+        setLockedPiece(capture.landing);
+        setPieceIsLocked(true);
+        setMustKill(true);
+        setPrevPlayerPos(capture.landing);
+      } else {
+        setValidCapturePoints([]);
+        setLockedPiece({ bI: -1, rI: -1 });
+        setPieceIsLocked(false);
+        setCanMove(false);
+        tempCanMove = false;
+        setMustKill(false);
+        setPlayerOneTurn(prev => !prev);
+      }
+
+      setBoardState(newBoard);
+
+      // setMustKill(false);
+      // 
+    }
 
     //fixExtraMovementBoxes();
     
-    if (canMove) {
+    if (tempCanMove) {
       let playerPieceValue = 2;
       let crownPieceValue = 7;
       if (playerOneTurn) {
@@ -362,8 +389,6 @@ if (mustKill) {
   return (
     <div>
       <TellPlayerTurn />
-      <p>Player one got captured {capturedWhitePieces} times</p>
-      <p>Player two got captured {capturedBlackPieces} times</p>
       {boardState.map((row, boardIndex) => (
         <div key={boardIndex} className="chessRow">
           {row.map((value, rowIndex) => (
@@ -377,6 +402,8 @@ if (mustKill) {
           ))}
         </div>
       ))}
+      <button className="button-3" onClick={() => setPlayerOneTurn(true)}>p1turn true</button>
+      <button className="button-3" onClick={() => setPlayerOneTurn(false)}>p1turn false</button>
       <p>gameId: {gameId}</p>
       <button className="menuButtony" onClick={() => setSaveGame (true)}>Save Game</button>
     </div>
