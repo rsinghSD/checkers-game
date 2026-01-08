@@ -24,17 +24,29 @@ interface ChessBoardProps {
 }
 export default function ChessBoard({status, loadGame, game_id}: ChessBoardProps) {
     const [boardState, setBoardState] = useState([
-    [0, 2, 0, 2, 0, 2, 0, 2, 0, 2], // __
-    [2, 0, 2, 0, 2, 0, 2, 0, 2, 0], // player (2)
-    [0, 2, 0, 2, 0, 2, 0, 2, 0, 2], // one
-    [2, 0, 2, 0, 2, 0, 2, 0, 2, 0], // __
+    [0, 1, 0, 1, 0, 1, 0, 1, 0, 1], // __
+    [1, 0, 1, 0, 1, 0, 1, 0, 1, 0], // player (1)
+    [0, 1, 0, 1, 0, 1, 0, 1, 0, 1], // one
+    [1, 0, 1, 0, 1, 0, 1, 0, 1, 0], // __
     [0, 1, 0, 1, 0, 1, 0, 1, 0, 1], // middle
     [1, 0, 1, 0, 1, 0, 1, 0, 1, 0], // zone
-    [0, 3, 0, 3, 0, 3, 0, 3, 0, 3], // __
-    [3, 0, 3, 0, 3, 0, 3, 0, 3, 0], // player (3)
-    [0, 3, 0, 3, 0, 3, 0, 3, 0, 3], // two
-    [3, 0, 3, 0, 3, 0, 3, 0, 3, 0], // __
+    [0, 1, 0, 1, 0, 1, 0, 1, 0, 1], // __
+    [1, 0, 1, 0, 1, 0, 1, 0, 1, 0], // player (1)
+    [0, 1, 0, 1, 0, 1, 0, 1, 0, 2], // two
+    [1, 0, 1, 0, 1, 0, 1, 0, 3, 0], // __
   ]);
+  //   const [boardState, setBoardState] = useState([
+  //   [0, 2, 0, 2, 0, 2, 0, 2, 0, 2], // __
+  //   [2, 0, 2, 0, 2, 0, 2, 0, 2, 0], // player (2)
+  //   [0, 2, 0, 2, 0, 2, 0, 2, 0, 2], // one
+  //   [2, 0, 2, 0, 2, 0, 2, 0, 2, 0], // __
+  //   [0, 1, 0, 1, 0, 1, 0, 1, 0, 1], // middle
+  //   [1, 0, 1, 0, 1, 0, 1, 0, 1, 0], // zone
+  //   [0, 3, 0, 3, 0, 3, 0, 3, 0, 3], // __
+  //   [3, 0, 3, 0, 3, 0, 3, 0, 3, 0], // player (3)
+  //   [0, 3, 0, 3, 0, 3, 0, 3, 0, 3], // two
+  //   [3, 0, 3, 0, 3, 0, 3, 0, 3, 0], // __
+  // ]);
   const [gameId, setGameId] = useState("Awaiting response from server...");
   const [saveGame, setSaveGame] = useState(false);
   const [isSetup, setIsSetup] = useState(false);
@@ -129,6 +141,7 @@ export default function ChessBoard({status, loadGame, game_id}: ChessBoardProps)
   }, [saveGame])
 
   function handleClick(value: number, boardIndex: number, rowIndex: number) {
+    
     console.log(
       `val: ${value} | bI: ${boardIndex} | rI: ${rowIndex} | mustKill ${mustKill} | isCrowned ${isCrowned} | lockedPiece ${lockedPiece.bI} ${lockedPiece.rI}`
     );
@@ -228,7 +241,10 @@ export default function ChessBoard({status, loadGame, game_id}: ChessBoardProps)
       setCanMove(false);
     }
 
-    
+    checkWinCondition();
+    checkBlocked("white")
+    checkBlocked("black")
+
     if ((value === 2 || value === 7) && playerOneTurn) {
       if (value === 7) {
         setIsCrowned(true);
@@ -270,7 +286,6 @@ export default function ChessBoard({status, loadGame, game_id}: ChessBoardProps)
     let boardIndexTwo = boardIndex + 2;
 
     let enemyValue = 3;
-    let rowDirection = 1;
     let capturableValue = 6;
     let crownValue = 8
     let crownRow = 9;
@@ -281,7 +296,6 @@ export default function ChessBoard({status, loadGame, game_id}: ChessBoardProps)
       boardIndexTwo = boardIndex - 2;
       enemyValue = 2;
       capturableValue = 5;
-      rowDirection = -1;
       crownValue = 7;
       crownRow = 0;
     }
@@ -381,6 +395,37 @@ export default function ChessBoard({status, loadGame, game_id}: ChessBoardProps)
         setValidCapturePoints(tempValidCapturePoints);
   }
 
+  function checkWinCondition() {
+    const flatboard = boardState.flat();
+    if(!flatboard.some(val => val === 2 || val === 7)) alert("Black wins!");
+    if(!flatboard.some(val => val === 3 || val === 8)) alert("White wins!")
+  }
+
+  function checkBlocked(player: "white" | "black") {
+  const values = player === "white" ? [2, 7] : [3, 8];
+  const direction = player === "white" ? 1 : -1; 
+
+  const blocked = !boardState.some((row, bI) =>
+    row.some((cell, rI) => {
+      if (!values.includes(cell)) return false;
+      const moves = [
+        [bI + direction, rI + 1],
+        [bI + direction, rI - 1]
+      ];
+      return moves.some(([newBI, newRI]) =>
+        newBI >= 0 && newBI < boardState.length &&
+        newRI >= 0 && newRI < boardState[0].length &&
+        boardState[newBI][newRI] === 1
+      );
+    })
+  );
+
+  let winningPlayer;
+  if (player === "white") winningPlayer = "black"
+  if (player === "black") winningPlayer = "white"
+
+  if (blocked) alert(`${player} has no valid moves! ${winningPlayer} won!`);
+}
   function TellPlayerTurn() {
     if (playerOneTurn) return <h2>It's your turn: Player One</h2>;
     else return <h2>It's your turn: Player Two</h2>;
@@ -402,8 +447,6 @@ export default function ChessBoard({status, loadGame, game_id}: ChessBoardProps)
           ))}
         </div>
       ))}
-      <button className="button-3" onClick={() => setPlayerOneTurn(true)}>p1turn true</button>
-      <button className="button-3" onClick={() => setPlayerOneTurn(false)}>p1turn false</button>
       <p>gameId: {gameId}</p>
       <button className="menuButtony" onClick={() => setSaveGame (true)}>Save Game</button>
     </div>

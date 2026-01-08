@@ -3,19 +3,6 @@
 </h1> 
 <!-- HTML support in Markdown is pretty epic :) -->
 
-MINIMAL REQ:
-- [x] fix king capturing others
-- [ ] implement multi capturing
-- [ ] win conditions
-
-LEFT TO DO: (part of all nighter)
-- [ ] Fix kings not able to eat other (kings?)
-- [ ] implement FORCE EAT
-- [ ] Multiple capture functionality
-- [ ] Add win conditions
-- [x] add install doc on readme
-- [ ] fix bugs...
-- [ ] 
 # checkers-game
 Implementation of the board game Checkers written in React/Typescript, made for a Bachelor Software Development Selection Test.
 
@@ -48,6 +35,8 @@ cd .\checkers-game\checkers-game
 
 4. run `npm run dev` in your terminal and open the localhost window
 
+The backend code is written in AWS lambda, thus is not debuggable from the github repo. You can acesss it in /backend however.
+
 ## Requirements for the Game
 ### Functional Requirements
 
@@ -72,7 +61,7 @@ International Draughts rules?
    * Crowned pieces (kings) gain enhanced movement:
      * They can move multiple squares diagonally in any direction.
      * They may jump over and capture an opponnent's piece from a distance, with the freedom to choose their landing square beyond the jumped piece
-4. Win Condition:
+4. Win Condition: DONE-ish
    * A player loses if they have no valid moves remaining. This situation arises if:
      * The player has no remaining pieces
      * All pieces are blocked by the opponents pieces and cannot move.
