@@ -106,19 +106,17 @@ Checklist:
 - [x] Switching players every play (local multiplayer)
 - [x] Implement Capturing
 - [x] Implement Crowning
-- [ ] Multiple capture functionality
-- [ ] Add win conditions
+- [x] Multiple capture functionality
+- [x] Add win conditions
 - [x] Make game load/saveable
 - [ ] Celebrate!
 - [ ] Extras: Menu, load menu, boardState editor for custom chess piece movement
 
 ## Database Schema Design
+
+I actually made the database before I made the frontend, and the way I used values changes and does not represent the scheme displayed here.
 https://dbdiagram.io/d/Chess-Game-ERD-Diagram-6939cacde877c63074578dde
 
-<iframe width="560" height="315" src='https://dbdiagram.io/e/6939cacde877c63074578dde/693b03c9e877c630747f6dc0'> </iframe>
-
-
-![database_schema_design](./docs/images/readme/chess_game_erd_diagram.png)
 
 ## Known bugs  
 See [Issues page](https://github.com/Bambaclad1/checkers-game/issues)
