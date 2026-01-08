@@ -40,7 +40,6 @@ The backend code is written in AWS lambda, thus is not debuggable from the githu
 ## Requirements for the Game
 ### Functional Requirements
 
-International Draughts rules?
 
 1. Game Board & Setup DONE
    * Board contains of 10x10 squares with alternating dark and light colors.
