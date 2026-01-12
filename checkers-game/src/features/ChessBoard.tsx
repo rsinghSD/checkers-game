@@ -24,29 +24,17 @@ interface ChessBoardProps {
 }
 export default function ChessBoard({status, loadGame, game_id}: ChessBoardProps) {
     const [boardState, setBoardState] = useState([
-    [0, 1, 0, 1, 0, 1, 0, 1, 0, 1], // __
-    [1, 0, 1, 0, 1, 0, 1, 0, 1, 0], // player (1)
-    [0, 1, 0, 1, 0, 1, 0, 1, 0, 1], // one
-    [1, 0, 1, 0, 1, 0, 1, 0, 1, 0], // __
+    [0, 2, 0, 2, 0, 2, 0, 2, 0, 2], // __
+    [2, 0, 2, 0, 2, 0, 2, 0, 2, 0], // player (2)
+    [0, 2, 0, 2, 0, 2, 0, 2, 0, 2], // one
+    [2, 0, 2, 0, 2, 0, 2, 0, 2, 0], // __
     [0, 1, 0, 1, 0, 1, 0, 1, 0, 1], // middle
     [1, 0, 1, 0, 1, 0, 1, 0, 1, 0], // zone
-    [0, 1, 0, 1, 0, 1, 0, 1, 0, 1], // __
-    [1, 0, 1, 0, 1, 0, 1, 0, 1, 0], // player (1)
-    [0, 1, 0, 1, 0, 1, 0, 1, 0, 2], // two
-    [1, 0, 1, 0, 1, 0, 1, 0, 3, 0], // __
+    [0, 3, 0, 3, 0, 3, 0, 3, 0, 3], // __
+    [3, 0, 3, 0, 3, 0, 3, 0, 3, 0], // player (3)
+    [0, 3, 0, 3, 0, 3, 0, 3, 0, 3], // two
+    [3, 0, 3, 0, 3, 0, 3, 0, 3, 0], // __
   ]);
-  //   const [boardState, setBoardState] = useState([
-  //   [0, 2, 0, 2, 0, 2, 0, 2, 0, 2], // __
-  //   [2, 0, 2, 0, 2, 0, 2, 0, 2, 0], // player (2)
-  //   [0, 2, 0, 2, 0, 2, 0, 2, 0, 2], // one
-  //   [2, 0, 2, 0, 2, 0, 2, 0, 2, 0], // __
-  //   [0, 1, 0, 1, 0, 1, 0, 1, 0, 1], // middle
-  //   [1, 0, 1, 0, 1, 0, 1, 0, 1, 0], // zone
-  //   [0, 3, 0, 3, 0, 3, 0, 3, 0, 3], // __
-  //   [3, 0, 3, 0, 3, 0, 3, 0, 3, 0], // player (3)
-  //   [0, 3, 0, 3, 0, 3, 0, 3, 0, 3], // two
-  //   [3, 0, 3, 0, 3, 0, 3, 0, 3, 0], // __
-  // ]);
   const [gameId, setGameId] = useState("Awaiting response from server...");
   const [saveGame, setSaveGame] = useState(false);
   const [isSetup, setIsSetup] = useState(false);
