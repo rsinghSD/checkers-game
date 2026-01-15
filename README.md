@@ -1,7 +1,6 @@
 <h1 align="center">
   <img src="./checkers_banner_image.png" alt="checkers-game banner" width="400" length="700" />
 </h1> 
-<!-- HTML support in Markdown is pretty epic :) -->
 
 # checkers-game
 Implementation of the board game Checkers written in React/Typescript, made for a Bachelor Software Development Selection Test.
