@@ -1,5 +1,4 @@
 import { useState } from "react"
-import { useEffect } from "react";
 import ChessBoard from "./features/ChessBoard";
 export default function LoadForm() {
     const [gameId, setGameId] = useState("");
