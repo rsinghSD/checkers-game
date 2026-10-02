@@ -1,12 +1,10 @@
 import "./Square.css";
-import { useState } from "react";
 
 type SquareProps = {
   index: number
   onClick: () => void
 }
 export default function Square({index, onClick}: SquareProps) {
-  const [value, setValue] = useState(0); // integer state
   let squareClass = "";
   let piece;
   // value 0 = empty brown

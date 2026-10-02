@@ -1,4 +1,4 @@
-export default async function SaveGame(body: { game_id: string; board_state: number[][]; player_state: { prev_player_pos: { bI: number; rI: number; }; valid_moves: { bI: number; rI: number; }[]; prev_enemy_pos: { bI: number; rI: number; }; valid_capture_points: { bI: number; rI: number; }[]; can_move: boolean; must_kill: boolean; player_one_turn: boolean; captured_white_pieces: number; captured_black_pieces: number; }; player_one_turn: boolean }){
+export default async function SaveGame(body: { game_id: string; board_state: number[][]; player_state: { prev_player_pos: { bI: number; rI: number; }; valid_moves: { bI: number; rI: number; }[]; prev_enemy_pos: { bI: number; rI: number; }; valid_capture_points: { landing: { bI: number; rI: number; }; enemy: { bI: number; rI: number; }; }[]; can_move: boolean; locked_piece: { bI: number; rI: number; }; piece_is_locked: boolean; must_kill: boolean; player_one_turn: boolean; captured_white_pieces: number; captured_black_pieces: number; }; player_one_turn: boolean }){
         const url = `https://mi58k79ihi.execute-api.us-east-1.amazonaws.com/develop`
         const board_state = encodeURIComponent(JSON.stringify(body.board_state));
         const player_state = encodeURIComponent(JSON.stringify(body.player_state));
@@ -13,4 +13,3 @@ export default async function SaveGame(body: { game_id: string; board_state: num
         const result = await response.json();
         return result;
 }
-
